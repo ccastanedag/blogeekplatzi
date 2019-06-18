@@ -14,7 +14,7 @@ class Autenticacion {
      *  su cuenta.
      */
     const configuracion = {
-      url: 'localhost:3000'
+      url: 'http://localhost:3000'
     }
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(result => {
