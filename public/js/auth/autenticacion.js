@@ -1,5 +1,20 @@
 class Autenticacion {
   autEmailPass(email, password) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(result => {
+        // Validamos que el usuario haya verificado su cuenta antes de usar
+        // los servicios de nuestra aplicación
+        if (result.user.emailVerified) {
+          $('#avatar').attr('src', 'imagenes/usuario_auth.png')
+          Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
+        } else {
+          // Forzamos el Logout para evitar que el usuario no verificado
+          // acceda a los servicios de nuestra aplicación
+          firebase.auth().signOut()
+          Materialize.toast(`Por favor verifica tu cuenta`, 5000)
+        }
+      })
+      $('.modal').modal('close')
     //$('#avatar').attr('src', 'imagenes/usuario_auth.png')
     //Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
     //$('.modal').modal('close')
